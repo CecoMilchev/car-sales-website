@@ -1,15 +1,16 @@
 package main
 
 import (
-	"github.com/car-sales-website/internal/repos"
-	"github.com/car-sales-website/pkg/server"
-	"github.com/car-sales-website/pkg/services"
+	"github.com/CecoMilchev/car-sales-website/internal/models"
+	"github.com/CecoMilchev/car-sales-website/internal/repos"
+	"github.com/CecoMilchev/car-sales-website/pkg/server"
+	"github.com/CecoMilchev/car-sales-website/pkg/services"
 )
 
 // "github.com/car-sales-website/internal/repos"
 
 func main() {
-	config := server.NewConfig()
+	config := models.NewConfig()
 
 	//db, err := ConnectDatabase(config)
 

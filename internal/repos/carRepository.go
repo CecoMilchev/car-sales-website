@@ -1,13 +1,13 @@
 package repos
 
 import (
-	"database/sql"
+	//"database/sql"
 
-	"github.com/car-sales-website/internal/models"
+	"github.com/CecoMilchev/car-sales-website/internal/models"
 )
 
 type CarRepository struct {
-	database *sql.DB
+	//database *sql.DB
 }
 
 func (repository *CarRepository) FindAll() []*models.Car {
@@ -37,6 +37,10 @@ func (repository *CarRepository) FindAll() []*models.Car {
 	return cars
 }
 
-func NewPersonRepository(database *sql.DB) *CarRepository {
-	return &CarRepository{database: database}
+func NewCarRepository() *CarRepository {
+	return &CarRepository{}
 }
+
+// func NewCarRepository(database *sql.DB) *CarRepository {
+// 	return &CarRepository{database: database}
+//}

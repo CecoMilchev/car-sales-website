@@ -1,3 +1,3 @@
-module github.com/car-sales-website
+module github.com/CecoMilchev/car-sales-website
 
 go 1.17

@@ -4,18 +4,19 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/car-sales-website/pkg/services"
+	"github.com/CecoMilchev/car-sales-website/internal/models"
+	"github.com/CecoMilchev/car-sales-website/pkg/services"
 )
 
 type Server struct {
-	config        *Config
+	config        *models.Config
 	personService *services.CarService
 }
 
 func (s *Server) Handler() http.Handler {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/people", s.people)
+	mux.HandleFunc("/cars", s.people)
 
 	return mux
 }
@@ -38,7 +39,7 @@ func (s *Server) people(w http.ResponseWriter, r *http.Request) {
 	w.Write(bytes)
 }
 
-func NewServer(config *Config, service *services.CarService) *Server {
+func NewServer(config *models.Config, service *services.CarService) *Server {
 	return &Server{
 		config:        config,
 		personService: service,
