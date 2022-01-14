@@ -4,19 +4,19 @@ import (
 	//"database/sql"
 
 	"github.com/CecoMilchev/car-sales-website/internal/models"
+	"gorm.io/gorm"
 )
 
 type CarRepository struct {
-	//database *sql.DB
+	database *gorm.DB
 }
 
-func (repository *CarRepository) FindAll() []*models.Car {
-	//rows, _ := repository.database.Query(
-	//  `SELECT id, name, age FROM people;`
-	//)
+func (repository *CarRepository) FindAll() []models.Car {
+	var Cars []models.Car
+	//cars := []*models.Car{}
+	repository.database.Find(&Cars)
 	//defer rows.Close()
 	//
-	cars := []*models.Car{}
 	//
 	//for rows.Next() {
 	//  var (
@@ -27,18 +27,30 @@ func (repository *CarRepository) FindAll() []*models.Car {
 	//
 	//  rows.Scan(&id, &name, &age)
 
-	cars = append(cars, &models.Car{
-		Id:    1,
-		Make:  "BMW",
-		Model: "M2Comp",
-	})
+	//cars = append(cars, &models.Car{
+	//	Id:      1,
+	//	OwnerId: 1,
+	//	Make:    "BMW",
+	//	Model:   "M2Comp",
+	//	//Category          :"",//string    `json:"category"`
+	//	Power:             306,                                                                 //uint      `json:"power"`
+	//	Price:             20500,                                                               //float32   `json:"price"`
+	//	Mileage:           70000,                                                               //uint      `json:"mileage"`
+	//	FuelType:          models.Petrol,                                                       //FuelType  `json:"fuelType"`
+	//	Gearbox:           models.Manual,                                                       //Gearbox   `json:"gearbox"`
+	//	EmissionsCategory: 5,                                                                   //uint8     `json:"emissionsCategory"`
+	//	FirstRegistration: time.Now(),                                                          //time.Time `json:"firstRegistration"`
+	//	Color:             "blue",                                                              //string    `json:"color"`
+	//	Description:       "Awesome daily driver sports car.",                                  //string    `json:"description"`
+	//	Features:          []string{"panoramic roof", "PDC", "LED headlights", "Alloy Wheels"}, //[]string  `json:"features"`
+	//})
 	//}
 
-	return cars
+	return Cars
 }
 
-func NewCarRepository() *CarRepository {
-	return &CarRepository{}
+func NewCarRepository(database *gorm.DB) *CarRepository {
+	return &CarRepository{database: database}
 }
 
 // func NewCarRepository(database *sql.DB) *CarRepository {
