@@ -12,9 +12,9 @@ type CarRepository struct {
 }
 
 func (repository *CarRepository) FindAll() []models.Car {
-	var Cars []models.Car
+	var cars []models.Car
 	//cars := []*models.Car{}
-	repository.database.Find(&Cars)
+	repository.database.Find(&cars)
 	//defer rows.Close()
 	//
 	//
@@ -46,7 +46,7 @@ func (repository *CarRepository) FindAll() []models.Car {
 	//})
 	//}
 
-	return Cars
+	return cars
 }
 
 func NewCarRepository(database *gorm.DB) *CarRepository {

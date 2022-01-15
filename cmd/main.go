@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"os"
+	//"database/sql"
 
 	"github.com/CecoMilchev/car-sales-website/internal/models"
 	"github.com/CecoMilchev/car-sales-website/internal/repos"
@@ -16,14 +15,13 @@ import (
 
 // "github.com/car-sales-website/internal/repos"
 
+func ConnectDatabase(config *models.Config) (*gorm.DB, error) {
+	return gorm.Open(sqlserver.Open(config.DatabasePath), &gorm.Config{})
+}
+
 func main() {
 	config := models.NewConfig()
-
-	login := os.Getenv("GOSQLSERVERLOGIN")
-	dsn := fmt.Sprintf("sqlserver://%s@localhost:1433?database=CarSales", login)
-	db, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
-
-	//db, err := ConnectDatabase(config)
+	db, err := ConnectDatabase(config)
 
 	if err != nil {
 		panic(err)
