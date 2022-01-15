@@ -31,7 +31,6 @@ CREATE TABLE [cars] (
   [make] nvarchar,
   [model] nvarchar,
   [power] int,
-  [price] int,
   [mileage] int,
   [emissionsCategory] int,
   [firstRegistration] datetime,

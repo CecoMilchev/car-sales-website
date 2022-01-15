@@ -8,6 +8,7 @@ type User struct {
 	LastName  string `header:"Last Name"`
 	Email     string `header:"Email"`
 	IsPrivate bool   `gorm:"'IsPrivate' boolean"`
+	RoleID    int    //[role_id]
 	//IsActive  bool   `gorm:"'Active' boolean"`
 	//Cars      []Car  `gorm:"many2many:cars_users;"`
 }
