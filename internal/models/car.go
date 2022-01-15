@@ -1,19 +1,19 @@
 package models
 
+import "time"
+
 type Car struct {
-	Id int `json:"id"`
+	ID                int       `json:"id"`
+	Make              string    `json:"make"`
+	Model             string    `json:"model"`
+	Power             uint      `json:"power"`
+	Price             uint      `json:"price"`
+	Mileage           uint      `json:"mileage"`
+	EmissionsCategory uint8     `json:"emissionsCategory"`
+	FirstRegistration time.Time `json:"firstRegistration"`
+	Color             string    `json:"color"`
+	CategoryID        int       `json:"categoryID"`
+	FuelTypeID        int       `json:"fuelTypeID"`
+	GearboxID         int       `json:"gearboxID"`
 	//OwnerId int    `json:"ownerId"`
-	Make  string `json:"make"`
-	Model string `json:"model"`
-	// Category          string    `json:"category"`
-	// Power             uint      `json:"power"`
-	// Price             uint      `json:"price"`
-	// Mileage           uint      `json:"mileage"`
-	// FuelType          FuelType  `json:"fuelType"`
-	// Gearbox           Gearbox   `json:"gearbox"`
-	// EmissionsCategory uint8     `json:"emissionsCategory"`
-	// FirstRegistration time.Time `json:"firstRegistration"`
-	// Color             string    `json:"color"`
-	// Description       string    `json:"description"`
-	// Features          []string  `json:"features"`
 }

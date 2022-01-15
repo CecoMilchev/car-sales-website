@@ -44,21 +44,21 @@ GO
 
 CREATE TABLE [gearboxes] (
   [id] int PRIMARY KEY IDENTITY(1, 1),
-  [value] int,
+  [value] nvarchar(255),
   [text] nvarchar(255)
 )
 GO
 
 CREATE TABLE [categories] (
   [id] int PRIMARY KEY IDENTITY(1, 1),
-  [value] int,
+  [value] nvarchar(255),
   [text] nvarchar(255)
 )
 GO
 
 CREATE TABLE [fueltypes] (
   [id] int PRIMARY KEY IDENTITY(1, 1),
-  [value] int,
+  [value] nvarchar(255),
   [text] nvarchar(255)
 )
 GO
