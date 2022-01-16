@@ -17,30 +17,45 @@ func (repository *CarRepository) FindAll() []models.Car {
 	return cars
 }
 
-func (repository *CarRepository) FindByID(id string) models.Car {
+func (repository *CarRepository) FindByID(id string) []models.Car {
 	car := models.Car{}
+	var cars []models.Car
 
 	repository.database.First(&car, id)
 
-	return car
+	cars = append(cars, car)
+
+	return cars
 }
 
-func (repository *CarRepository) CreateCar(car models.Car) models.Car {
+func (repository *CarRepository) CreateCar(car models.Car) []models.Car {
+	var cars []models.Car
+
 	repository.database.Create(&car)
 
-	return car
+	cars = append(cars, car)
+
+	return cars
 }
 
-func (repository *CarRepository) UpdateCar(car models.Car) models.Car {
+func (repository *CarRepository) UpdateCar(car models.Car) []models.Car {
+	var cars []models.Car
+
 	repository.database.Save(&car)
 
-	return car
+	cars = append(cars, car)
+
+	return cars
 }
 
-func (repository *CarRepository) DeleteCar(car models.Car) models.Car {
+func (repository *CarRepository) DeleteCar(car models.Car) []models.Car {
+	var cars []models.Car
+
 	repository.database.Delete(&car)
 
-	return car
+	cars = append(cars, car)
+
+	return cars
 }
 
 func NewCarRepository(database *gorm.DB) *CarRepository {

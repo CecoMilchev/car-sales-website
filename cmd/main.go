@@ -27,11 +27,13 @@ func main() {
 		panic(err)
 	}
 
-	personRepository := repos.NewCarRepository(db)
+	userRepository := repos.NewUserRepository(db)
+	userService := services.NewUserService(config, userRepository)
 
-	personService := services.NewCarService(config, personRepository)
+	carRepository := repos.NewCarRepository(db)
+	carService := services.NewCarService(config, carRepository)
 
-	server := server.NewServer(config, personService)
+	server := server.NewServer(config, userService, carService)
 
 	server.Run()
 }

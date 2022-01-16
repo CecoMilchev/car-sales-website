@@ -12,8 +12,9 @@ import (
 )
 
 type Server struct {
-	config     *models.Config
-	carService *services.CarService
+	config      *models.Config
+	userService *services.UserService
+	carService  *services.CarService
 }
 
 func setupRouter(s *Server) *gin.Engine {
@@ -24,6 +25,9 @@ func setupRouter(s *Server) *gin.Engine {
 	r.POST("/cars", createCar(s))
 	r.PUT("/cars/:id", updateCar(s))
 	r.DELETE("/cars/:id", deleteCar(s))
+
+	r.POST("/register", registerUser(s))
+	r.POST("/login", login(s))
 
 	return r
 }
@@ -104,9 +108,52 @@ func deleteCar(s *Server) gin.HandlerFunc {
 	return gin.HandlerFunc(fn)
 }
 
-func NewServer(config *models.Config, service *services.CarService) *Server {
+func registerUser(s *Server) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+		var input models.User
+		if err := c.ShouldBindJSON(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		s.userService.CreateUser(input)
+		c.JSON(http.StatusOK, gin.H{"message": "Successful registration!"})
+	}
+
+	return gin.HandlerFunc(fn)
+}
+
+func login(s *Server) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+		var input models.User
+		u := models.User{}
+
+		if err := c.ShouldBindJSON(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		u.UserName = input.UserName
+		u.Password = input.Password
+
+		token, err := models.LoginCheck(s.userService.FindByField("username", u.UserName)[0], u.UserName, u.Password)
+
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "username or password is incorrect."})
+			return
+		}
+
+		//s.userService.CreateUser(input)
+		c.JSON(http.StatusOK, gin.H{"token": token})
+	}
+
+	return gin.HandlerFunc(fn)
+}
+
+func NewServer(config *models.Config, userService *services.UserService, carService *services.CarService) *Server {
 	return &Server{
-		config:     config,
-		carService: service,
+		config:      config,
+		userService: userService,
+		carService:  carService,
 	}
 }
