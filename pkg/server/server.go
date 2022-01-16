@@ -23,6 +23,7 @@ func setupRouter(s *Server) *gin.Engine {
 	r.GET("/cars/:id", findCar(s))
 	r.POST("/cars", createCar(s))
 	r.PUT("/cars/:id", updateCar(s))
+	r.DELETE("/cars/:id", deleteCar(s))
 
 	return r
 }
@@ -76,14 +77,28 @@ func updateCar(s *Server) gin.HandlerFunc {
 			return
 		}
 
-		// if err := models.DB.Where("id = ?", c.Param("id")).First(&book).Error; err != nil {
+		// if err := db.Where("id = ?", c.Param("id")).First(&car).Error; err != nil {
 		//   c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		//   return
 		// }
 
-		//models.DB.Model(&book).Updates(input)
+		//db.Model(&car).Updates(input)
 
 		c.JSON(http.StatusOK, gin.H{"data": s.carService.UpdateCar(input)})
+	}
+
+	return gin.HandlerFunc(fn)
+}
+
+func deleteCar(s *Server) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+		var input models.Car
+		if err := c.ShouldBindJSON(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"data": s.carService.DeleteCar(input)})
 	}
 
 	return gin.HandlerFunc(fn)

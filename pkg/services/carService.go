@@ -42,6 +42,14 @@ func (service *CarService) UpdateCar(car models.Car) models.Car {
 	return models.Car{}
 }
 
+func (service *CarService) DeleteCar(car models.Car) models.Car {
+	if service.config.Enabled {
+		return service.repository.DeleteCar(car)
+	}
+
+	return models.Car{}
+}
+
 func NewCarService(config *models.Config, repository *repos.CarRepository) *CarService {
 	return &CarService{config: config, repository: repository}
 }

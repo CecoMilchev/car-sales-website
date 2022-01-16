@@ -1,10 +1,6 @@
 package repos
 
 import (
-	//"database/sql"
-
-	"fmt"
-
 	"github.com/CecoMilchev/car-sales-website/internal/models"
 	"gorm.io/gorm"
 )
@@ -36,14 +32,13 @@ func (repository *CarRepository) CreateCar(car models.Car) models.Car {
 }
 
 func (repository *CarRepository) UpdateCar(car models.Car) models.Car {
-	//repository.database.Create(&car)
-	//r.logger.Debugf("Executing Save on %T", target)
-
-	fmt.Print("-----------")
-	fmt.Print(&car)
-	fmt.Print("-----------")
-
 	repository.database.Save(&car)
+
+	return car
+}
+
+func (repository *CarRepository) DeleteCar(car models.Car) models.Car {
+	repository.database.Delete(&car)
 
 	return car
 }
