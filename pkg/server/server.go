@@ -1,47 +1,43 @@
 package server
 
 import (
-	"encoding/json"
+	//"encoding/json"
 	"net/http"
 
 	"github.com/CecoMilchev/car-sales-website/internal/models"
 	"github.com/CecoMilchev/car-sales-website/pkg/services"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Server struct {
-	config        *models.Config
-	personService *services.CarService
+	config     *models.Config
+	carService *services.CarService
 }
 
-func (s *Server) Handler() http.Handler {
-	mux := http.NewServeMux()
+func setupRouter(s *Server) *gin.Engine {
+	r := gin.Default()
+	r.GET("/cars", people(s))
 
-	mux.HandleFunc("/cars", s.people)
-
-	return mux
+	return r
 }
 
 func (s *Server) Run() {
-	httpServer := &http.Server{
-		Addr:    ":" + s.config.Port,
-		Handler: s.Handler(),
-	}
-
-	httpServer.ListenAndServe()
+	r := setupRouter(s)
+	r.Run(s.config.Port)
 }
 
-func (s *Server) people(w http.ResponseWriter, r *http.Request) {
-	people := s.personService.FindAll()
-	bytes, _ := json.Marshal(people)
+func people(s *Server) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"data": s.carService.FindAll()})
+	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(bytes)
+	return gin.HandlerFunc(fn)
 }
 
 func NewServer(config *models.Config, service *services.CarService) *Server {
 	return &Server{
-		config:        config,
-		personService: service,
+		config:     config,
+		carService: service,
 	}
 }

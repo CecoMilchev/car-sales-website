@@ -18,6 +18,6 @@ func NewConfig() *Config {
 	return &Config{
 		Enabled:      true,
 		DatabasePath: dsn,
-		Port:         "8000",
+		Port:         ":8000",
 	}
 }
