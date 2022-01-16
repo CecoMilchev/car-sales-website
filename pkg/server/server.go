@@ -2,7 +2,7 @@ package server
 
 import (
 	//"encoding/json"
-	"fmt"
+
 	"net/http"
 
 	"github.com/CecoMilchev/car-sales-website/internal/models"
@@ -60,12 +60,6 @@ func createCar(s *Server) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		fmt.Print("-----------")
-		fmt.Print(&input)
-		fmt.Print("-----------")
-
-		//book := models.Car{Title: input.Title, Author: input.Author}
-		//models.DB.Create(&book)
 
 		c.JSON(http.StatusOK, gin.H{"data": s.carService.CreateCar(input)})
 	}
@@ -80,13 +74,6 @@ func updateCar(s *Server) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-
-		// if err := db.Where("id = ?", c.Param("id")).First(&car).Error; err != nil {
-		//   c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-		//   return
-		// }
-
-		//db.Model(&car).Updates(input)
 
 		c.JSON(http.StatusOK, gin.H{"data": s.carService.UpdateCar(input)})
 	}

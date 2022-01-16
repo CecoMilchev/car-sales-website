@@ -1,8 +1,6 @@
 package main
 
 import (
-	//"database/sql"
-
 	"github.com/CecoMilchev/car-sales-website/internal/models"
 	"github.com/CecoMilchev/car-sales-website/internal/repos"
 	"github.com/CecoMilchev/car-sales-website/pkg/server"
@@ -10,10 +8,7 @@ import (
 
 	"gorm.io/driver/sqlserver"
 	"gorm.io/gorm"
-	// github.com/denisenkom/go-mssqldb
 )
-
-// "github.com/car-sales-website/internal/repos"
 
 func ConnectDatabase(config *models.Config) (*gorm.DB, error) {
 	return gorm.Open(sqlserver.Open(config.DatabasePath), &gorm.Config{})
